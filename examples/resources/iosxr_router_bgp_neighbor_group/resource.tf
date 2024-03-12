@@ -2,6 +2,10 @@ resource "iosxr_router_bgp_neighbor_group" "example" {
   as_number                           = "65001"
   name                                = "GROUP1"
   remote_as                           = "65001"
+  local_as                            = "65003"
+  local_as_no_prepend                 = true
+  local_as_replace_as                 = true
+  local_as_dual_as                    = true
   update_source                       = "Loopback0"
   advertisement_interval_seconds      = 10
   bfd_minimum_interval                = 3
@@ -20,7 +24,4 @@ resource "iosxr_router_bgp_neighbor_group" "example" {
       route_policy_out                           = "ROUTE_POLICY_1"
     }
   ]
-  timers_keepalive_interval          = 5
-  timers_holdtime                    = "3"
-  timers_minimum_acceptable_holdtime = "3"
 }

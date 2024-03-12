@@ -28,6 +28,10 @@ import (
 func TestAccDataSourceIosxrRouterBGPNeighborGroup(t *testing.T) {
 	var checks []resource.TestCheckFunc
 	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_neighbor_group.test", "remote_as", "65001"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_neighbor_group.test", "local_as", "65003"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_neighbor_group.test", "local_as_no_prepend", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_neighbor_group.test", "local_as_replace_as", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_neighbor_group.test", "local_as_dual_as", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_neighbor_group.test", "update_source", "Loopback0"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_neighbor_group.test", "advertisement_interval_seconds", "10"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_neighbor_group.test", "bfd_minimum_interval", "3"))
@@ -42,9 +46,6 @@ func TestAccDataSourceIosxrRouterBGPNeighborGroup(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_neighbor_group.test", "address_families.0.route_reflector_client_inheritance_disable", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_neighbor_group.test", "address_families.0.route_policy_in", "ROUTE_POLICY_1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_neighbor_group.test", "address_families.0.route_policy_out", "ROUTE_POLICY_1"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_neighbor_group.test", "timers_keepalive_interval", "5"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_neighbor_group.test", "timers_holdtime", "3"))
-	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_neighbor_group.test", "timers_minimum_acceptable_holdtime", "3"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -81,6 +82,10 @@ func testAccDataSourceIosxrRouterBGPNeighborGroupConfig() string {
 	config += `	as_number = "65001"` + "\n"
 	config += `	name = "GROUP1"` + "\n"
 	config += `	remote_as = "65001"` + "\n"
+	config += `	local_as = "65003"` + "\n"
+	config += `	local_as_no_prepend = true` + "\n"
+	config += `	local_as_replace_as = true` + "\n"
+	config += `	local_as_dual_as = true` + "\n"
 	config += `	update_source = "Loopback0"` + "\n"
 	config += `	advertisement_interval_seconds = 10` + "\n"
 	config += `	bfd_minimum_interval = 3` + "\n"
@@ -97,9 +102,6 @@ func testAccDataSourceIosxrRouterBGPNeighborGroupConfig() string {
 	config += `		route_policy_in = "ROUTE_POLICY_1"` + "\n"
 	config += `		route_policy_out = "ROUTE_POLICY_1"` + "\n"
 	config += `	}]` + "\n"
-	config += `	timers_keepalive_interval = 5` + "\n"
-	config += `	timers_holdtime = "3"` + "\n"
-	config += `	timers_minimum_acceptable_holdtime = "3"` + "\n"
 	config += `	depends_on = [iosxr_gnmi.PreReq0, iosxr_gnmi.PreReq1, ]` + "\n"
 	config += `}` + "\n"
 

@@ -96,6 +96,22 @@ func (r *RouterBGPNeighborGroupResource) Schema(ctx context.Context, req resourc
 				MarkdownDescription: helpers.NewAttributeDescription("bgp as-number").String,
 				Optional:            true,
 			},
+			"local_as": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("bgp as-number").String,
+				Optional:            true,
+			},
+			"local_as_no_prepend": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Do not prepend local AS to announcements from this neighbor").String,
+				Optional:            true,
+			},
+			"local_as_replace_as": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Prepend only local AS to announcements to this neighbor").String,
+				Optional:            true,
+			},
+			"local_as_dual_as": schema.BoolAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Dual-AS mode").String,
+				Optional:            true,
+			},
 			"update_source": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Source of routing updates").String,
 				Optional:            true,
@@ -198,21 +214,6 @@ func (r *RouterBGPNeighborGroupResource) Schema(ctx context.Context, req resourc
 						},
 					},
 				},
-			},
-			"timers_keepalive_interval": schema.Int64Attribute{
-				MarkdownDescription: helpers.NewAttributeDescription("BGP timers").AddIntegerRangeDescription(0, 65535).String,
-				Required:            true,
-				Validators: []validator.Int64{
-					int64validator.Between(0, 65535),
-				},
-			},
-			"timers_holdtime": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Holdtime. Set 0 to disable keepalives/hold time.").String,
-				Required:            true,
-			},
-			"timers_minimum_acceptable_holdtime": schema.StringAttribute{
-				MarkdownDescription: helpers.NewAttributeDescription("Minimum acceptable holdtime from neighbor. Set 0 to disable keepalives/hold time.").String,
-				Optional:            true,
 			},
 		},
 	}

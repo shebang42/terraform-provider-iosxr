@@ -74,6 +74,22 @@ func (d *RouterBGPNeighborGroupDataSource) Schema(ctx context.Context, req datas
 				MarkdownDescription: "bgp as-number",
 				Computed:            true,
 			},
+			"local_as": schema.StringAttribute{
+				MarkdownDescription: "bgp as-number",
+				Computed:            true,
+			},
+			"local_as_no_prepend": schema.BoolAttribute{
+				MarkdownDescription: "Do not prepend local AS to announcements from this neighbor",
+				Computed:            true,
+			},
+			"local_as_replace_as": schema.BoolAttribute{
+				MarkdownDescription: "Prepend only local AS to announcements to this neighbor",
+				Computed:            true,
+			},
+			"local_as_dual_as": schema.BoolAttribute{
+				MarkdownDescription: "Dual-AS mode",
+				Computed:            true,
+			},
 			"update_source": schema.StringAttribute{
 				MarkdownDescription: "Source of routing updates",
 				Computed:            true,
@@ -149,18 +165,6 @@ func (d *RouterBGPNeighborGroupDataSource) Schema(ctx context.Context, req datas
 						},
 					},
 				},
-			},
-			"timers_keepalive_interval": schema.Int64Attribute{
-				MarkdownDescription: "BGP timers",
-				Computed:            true,
-			},
-			"timers_holdtime": schema.StringAttribute{
-				MarkdownDescription: "Holdtime. Set 0 to disable keepalives/hold time.",
-				Computed:            true,
-			},
-			"timers_minimum_acceptable_holdtime": schema.StringAttribute{
-				MarkdownDescription: "Minimum acceptable holdtime from neighbor. Set 0 to disable keepalives/hold time.",
-				Computed:            true,
 			},
 		},
 	}
