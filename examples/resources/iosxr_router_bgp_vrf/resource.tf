@@ -33,6 +33,7 @@ resource "iosxr_router_bgp_vrf" "example" {
       timers_holdtime                 = "20"
       update_source                   = "GigabitEthernet0/0/0/1"
       ttl_security                    = false
+      use_neighbor_group              = "GROUP1"
     }
   ]
 }

@@ -215,6 +215,10 @@ func (d *RouterBGPVRFDataSource) Schema(ctx context.Context, req datasource.Sche
 							MarkdownDescription: "Enable EBGP TTL security",
 							Computed:            true,
 						},
+						"use_neighbor_group": schema.StringAttribute{
+							MarkdownDescription: "Inherit configuration from a neighbor-group",
+							Computed:            true,
+						},
 					},
 				},
 			},

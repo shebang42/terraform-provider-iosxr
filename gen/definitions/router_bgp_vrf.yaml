@@ -115,9 +115,19 @@ attributes:
         example: GigabitEthernet0/0/0/1
       - yang_name: ttl-security
         example: false
+      - yang_name: use/neighbor-group
+        optional: true
+        example: GROUP1
 
 test_prerequisites:
   - path: Cisco-IOS-XR-um-router-bgp-cfg:/router/bgp/as[as-number=65001]
     attributes:
       - name: as-number
         value: 65001
+    lists:
+      - name: neighbor-groups/neighbor-group
+        key: neighbor-group-name
+        items:
+          - attributes:
+              - name: neighbor-group-name
+                value: GROUP1

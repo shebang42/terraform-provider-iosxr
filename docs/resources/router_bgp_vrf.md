@@ -48,6 +48,7 @@ resource "iosxr_router_bgp_vrf" "example" {
       timers_holdtime                 = "20"
       update_source                   = "GigabitEthernet0/0/0/1"
       ttl_security                    = false
+      use_neighbor_group              = "GROUP1"
     }
   ]
 }
@@ -128,6 +129,7 @@ Optional:
   - Range: `0`-`65535`
 - `ttl_security` (Boolean) Enable EBGP TTL security
 - `update_source` (String) Source of routing updates
+- `use_neighbor_group` (String) Inherit configuration from a neighbor-group
 
 ## Import
 

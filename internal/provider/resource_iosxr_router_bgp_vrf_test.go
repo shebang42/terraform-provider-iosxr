@@ -59,6 +59,7 @@ func TestAccIosxrRouterBGPVRF(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("iosxr_router_bgp_vrf.test", "neighbors.0.timers_holdtime", "20"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxr_router_bgp_vrf.test", "neighbors.0.update_source", "GigabitEthernet0/0/0/1"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxr_router_bgp_vrf.test", "neighbors.0.ttl_security", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("iosxr_router_bgp_vrf.test", "neighbors.0.use_neighbor_group", "GROUP1"))
 	var steps []resource.TestStep
 	if os.Getenv("SKIP_MINIMUM_TEST") == "" {
 		steps = append(steps, resource.TestStep{
@@ -135,6 +136,7 @@ func testAccIosxrRouterBGPVRFConfig_all() string {
 	config += `		timers_holdtime = "20"` + "\n"
 	config += `		update_source = "GigabitEthernet0/0/0/1"` + "\n"
 	config += `		ttl_security = false` + "\n"
+	config += `		use_neighbor_group = "GROUP1"` + "\n"
 	config += `		}]` + "\n"
 	config += `	depends_on = [iosxr_gnmi.PreReq0, ]` + "\n"
 	config += `}` + "\n"

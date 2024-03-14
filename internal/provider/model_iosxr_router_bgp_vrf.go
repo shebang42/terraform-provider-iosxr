@@ -95,6 +95,7 @@ type RouterBGPVRFNeighbors struct {
 	TimersHoldtime                    types.String `tfsdk:"timers_holdtime"`
 	UpdateSource                      types.String `tfsdk:"update_source"`
 	TtlSecurity                       types.Bool   `tfsdk:"ttl_security"`
+	UseNeighborGroup                  types.String `tfsdk:"use_neighbor_group"`
 }
 
 func (data RouterBGPVRF) getPath() string {
@@ -239,6 +240,9 @@ func (data RouterBGPVRF) toBody(ctx context.Context) string {
 				if item.TtlSecurity.ValueBool() {
 					body, _ = sjson.Set(body, "neighbors.neighbor"+"."+strconv.Itoa(index)+"."+"ttl-security", map[string]string{})
 				}
+			}
+			if !item.UseNeighborGroup.IsNull() && !item.UseNeighborGroup.IsUnknown() {
+				body, _ = sjson.Set(body, "neighbors.neighbor"+"."+strconv.Itoa(index)+"."+"use.neighbor-group", item.UseNeighborGroup.ValueString())
 			}
 		}
 	}
@@ -488,6 +492,11 @@ func (data *RouterBGPVRF) updateFromBody(ctx context.Context, res []byte) {
 		} else {
 			data.Neighbors[i].TtlSecurity = types.BoolNull()
 		}
+		if value := r.Get("use.neighbor-group"); value.Exists() && !data.Neighbors[i].UseNeighborGroup.IsNull() {
+			data.Neighbors[i].UseNeighborGroup = types.StringValue(value.String())
+		} else {
+			data.Neighbors[i].UseNeighborGroup = types.StringNull()
+		}
 	}
 }
 
@@ -623,6 +632,9 @@ func (data *RouterBGPVRFData) fromBody(ctx context.Context, res []byte) {
 			} else {
 				item.TtlSecurity = types.BoolValue(false)
 			}
+			if cValue := v.Get("use.neighbor-group"); cValue.Exists() {
+				item.UseNeighborGroup = types.StringValue(cValue.String())
+			}
 			data.Neighbors = append(data.Neighbors, item)
 			return true
 		})
@@ -755,6 +767,9 @@ func (data *RouterBGPVRF) getDeletedItems(ctx context.Context, state RouterBGPVR
 				}
 				if !state.Neighbors[i].TtlSecurity.IsNull() && data.Neighbors[j].TtlSecurity.IsNull() {
 					deletedItems = append(deletedItems, fmt.Sprintf("%v/neighbors/neighbor%v/ttl-security", state.getPath(), keyString))
+				}
+				if !state.Neighbors[i].UseNeighborGroup.IsNull() && data.Neighbors[j].UseNeighborGroup.IsNull() {
+					deletedItems = append(deletedItems, fmt.Sprintf("%v/neighbors/neighbor%v/use/neighbor-group", state.getPath(), keyString))
 				}
 				break
 			}

@@ -57,6 +57,7 @@ func TestAccDataSourceIosxrRouterBGPVRF(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_vrf.test", "neighbors.0.timers_holdtime", "20"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_vrf.test", "neighbors.0.update_source", "GigabitEthernet0/0/0/1"))
 	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_vrf.test", "neighbors.0.ttl_security", "false"))
+	checks = append(checks, resource.TestCheckResourceAttr("data.iosxr_router_bgp_vrf.test", "neighbors.0.use_neighbor_group", "GROUP1"))
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 func() { testAccPreCheck(t) },
 		ProtoV6ProviderFactories: testAccProtoV6ProviderFactories,
@@ -115,6 +116,7 @@ func testAccDataSourceIosxrRouterBGPVRFConfig() string {
 	config += `		timers_holdtime = "20"` + "\n"
 	config += `		update_source = "GigabitEthernet0/0/0/1"` + "\n"
 	config += `		ttl_security = false` + "\n"
+	config += `		use_neighbor_group = "GROUP1"` + "\n"
 	config += `	}]` + "\n"
 	config += `	depends_on = [iosxr_gnmi.PreReq0, ]` + "\n"
 	config += `}` + "\n"
