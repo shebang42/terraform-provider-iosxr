@@ -62,6 +62,8 @@ attributes:
         example: 10.1.1.2
       - yang_name: remote-as
         example: 65002
+      - yang_name: use/neighbor-group
+        example: GROUP1
       - yang_name: description
         example: My Neighbor Description
       - yang_name: advertisement-interval/time-in-seconds
