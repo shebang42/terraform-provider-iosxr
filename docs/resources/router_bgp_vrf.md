@@ -29,6 +29,7 @@ resource "iosxr_router_bgp_vrf" "example" {
     {
       neighbor_address                = "10.1.1.2"
       remote_as                       = "65002"
+      use_neighbor_group              = "GROUP1"
       description                     = "My Neighbor Description"
       advertisement_interval_seconds  = 10
       ignore_connected_check          = true
@@ -128,6 +129,7 @@ Optional:
   - Range: `0`-`65535`
 - `ttl_security` (Boolean) Enable EBGP TTL security
 - `update_source` (String) Source of routing updates
+- `use_neighbor_group` (String) Inherit configuration from a neighbor-group
 
 ## Import
 

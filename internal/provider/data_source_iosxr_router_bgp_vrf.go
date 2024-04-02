@@ -135,6 +135,10 @@ func (d *RouterBGPVRFDataSource) Schema(ctx context.Context, req datasource.Sche
 							MarkdownDescription: "bgp as-number",
 							Computed:            true,
 						},
+						"use_neighbor_group": schema.StringAttribute{
+							MarkdownDescription: "Inherit configuration from a neighbor-group",
+							Computed:            true,
+						},
 						"description": schema.StringAttribute{
 							MarkdownDescription: "Neighbor specific description",
 							Computed:            true,

@@ -183,6 +183,13 @@ func (r *RouterBGPVRFResource) Schema(ctx context.Context, req resource.SchemaRe
 							MarkdownDescription: helpers.NewAttributeDescription("bgp as-number").String,
 							Optional:            true,
 						},
+						"use_neighbor_group": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("Inherit configuration from a neighbor-group").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(1, 1024),
+							},
+						},
 						"description": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Neighbor specific description").String,
 							Optional:            true,

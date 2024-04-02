@@ -75,6 +75,7 @@ type RouterBGPVRFData struct {
 type RouterBGPVRFNeighbors struct {
 	NeighborAddress                   types.String `tfsdk:"neighbor_address"`
 	RemoteAs                          types.String `tfsdk:"remote_as"`
+	UseNeighborGroup                  types.String `tfsdk:"use_neighbor_group"`
 	Description                       types.String `tfsdk:"description"`
 	AdvertisementIntervalSeconds      types.Int64  `tfsdk:"advertisement_interval_seconds"`
 	AdvertisementIntervalMilliseconds types.Int64  `tfsdk:"advertisement_interval_milliseconds"`
@@ -161,6 +162,9 @@ func (data RouterBGPVRF) toBody(ctx context.Context) string {
 			}
 			if !item.RemoteAs.IsNull() && !item.RemoteAs.IsUnknown() {
 				body, _ = sjson.Set(body, "neighbors.neighbor"+"."+strconv.Itoa(index)+"."+"remote-as", item.RemoteAs.ValueString())
+			}
+			if !item.UseNeighborGroup.IsNull() && !item.UseNeighborGroup.IsUnknown() {
+				body, _ = sjson.Set(body, "neighbors.neighbor"+"."+strconv.Itoa(index)+"."+"use.neighbor-group", item.UseNeighborGroup.ValueString())
 			}
 			if !item.Description.IsNull() && !item.Description.IsUnknown() {
 				body, _ = sjson.Set(body, "neighbors.neighbor"+"."+strconv.Itoa(index)+"."+"description", item.Description.ValueString())
@@ -351,6 +355,11 @@ func (data *RouterBGPVRF) updateFromBody(ctx context.Context, res []byte) {
 			data.Neighbors[i].RemoteAs = types.StringValue(value.String())
 		} else {
 			data.Neighbors[i].RemoteAs = types.StringNull()
+		}
+		if value := r.Get("use.neighbor-group"); value.Exists() && !data.Neighbors[i].UseNeighborGroup.IsNull() {
+			data.Neighbors[i].UseNeighborGroup = types.StringValue(value.String())
+		} else {
+			data.Neighbors[i].UseNeighborGroup = types.StringNull()
 		}
 		if value := r.Get("description"); value.Exists() && !data.Neighbors[i].Description.IsNull() {
 			data.Neighbors[i].Description = types.StringValue(value.String())
@@ -545,6 +554,9 @@ func (data *RouterBGPVRF) fromBody(ctx context.Context, res []byte) {
 			if cValue := v.Get("remote-as"); cValue.Exists() {
 				item.RemoteAs = types.StringValue(cValue.String())
 			}
+			if cValue := v.Get("use.neighbor-group"); cValue.Exists() {
+				item.UseNeighborGroup = types.StringValue(cValue.String())
+			}
 			if cValue := v.Get("description"); cValue.Exists() {
 				item.Description = types.StringValue(cValue.String())
 			}
@@ -682,6 +694,9 @@ func (data *RouterBGPVRFData) fromBody(ctx context.Context, res []byte) {
 			}
 			if cValue := v.Get("remote-as"); cValue.Exists() {
 				item.RemoteAs = types.StringValue(cValue.String())
+			}
+			if cValue := v.Get("use.neighbor-group"); cValue.Exists() {
+				item.UseNeighborGroup = types.StringValue(cValue.String())
 			}
 			if cValue := v.Get("description"); cValue.Exists() {
 				item.Description = types.StringValue(cValue.String())
@@ -833,6 +848,9 @@ func (data *RouterBGPVRF) getDeletedItems(ctx context.Context, state RouterBGPVR
 			if found {
 				if !state.Neighbors[i].RemoteAs.IsNull() && data.Neighbors[j].RemoteAs.IsNull() {
 					deletedItems = append(deletedItems, fmt.Sprintf("%v/neighbors/neighbor%v/remote-as", state.getPath(), keyString))
+				}
+				if !state.Neighbors[i].UseNeighborGroup.IsNull() && data.Neighbors[j].UseNeighborGroup.IsNull() {
+					deletedItems = append(deletedItems, fmt.Sprintf("%v/neighbors/neighbor%v/use/neighbor-group", state.getPath(), keyString))
 				}
 				if !state.Neighbors[i].Description.IsNull() && data.Neighbors[j].Description.IsNull() {
 					deletedItems = append(deletedItems, fmt.Sprintf("%v/neighbors/neighbor%v/description", state.getPath(), keyString))

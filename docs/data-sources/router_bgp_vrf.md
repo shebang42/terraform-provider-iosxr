@@ -76,3 +76,4 @@ Read-Only:
 - `timers_keepalive_interval` (Number) BGP timers
 - `ttl_security` (Boolean) Enable EBGP TTL security
 - `update_source` (String) Source of routing updates
+- `use_neighbor_group` (String) Inherit configuration from a neighbor-group
