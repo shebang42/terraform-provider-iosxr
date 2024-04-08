@@ -68,6 +68,12 @@ attributes:
       - yang_name: shape/average/rate/unit
         example: gbps
         exclude_test: true
+      - yang_name: shape/average/excess-burst/value
+        example: 100
+        exclude_test: true
+      - yang_name: shape/average/excess-burst/unit
+        example: gbps
+        exclude_test: true
       - yang_name: bandwidth-remaining/unit
         example: percent
         exclude_test: true
