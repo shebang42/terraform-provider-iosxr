@@ -80,6 +80,8 @@ Optional:
 - `set_dscp` (String) Set IP DSCP (DiffServ CodePoint)
 - `set_mpls_experimental_topmost` (Number) Sets the experimental value of the MPLS packet top-most labels.
   - Range: `0`-`7`
+- `shape_average_excess_burst_size` (Number) - Range: `1`-`4294967295`
+- `shape_average_excess_burst_unit` (String) - Choices: `bytes`, `cells`, `gbytes`, `kbytes`, `mbytes`, `ms`, `packets`, `us`
 - `shape_average_rate_unit` (String) Shape rate unit
   - Choices: `bps`, `cellsps`, `gbps`, `kbps`, `mbps`, `per-million`, `per-thousand`, `percent`
 - `shape_average_rate_value` (String)

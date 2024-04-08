@@ -63,6 +63,8 @@ type PolicyMapQoSClasses struct {
 	PoliceViolateActionDrop     types.Bool                       `tfsdk:"police_violate_action_drop"`
 	ShapeAverageRateValue       types.String                     `tfsdk:"shape_average_rate_value"`
 	ShapeAverageRateUnit        types.String                     `tfsdk:"shape_average_rate_unit"`
+	ShapeAverageExcessBurstSize types.Int64                      `tfsdk:"shape_average_excess_burst_size"`
+	ShapeAverageExcessBurstUnit types.String                     `tfsdk:"shape_average_excess_burst_unit"`
 	BandwidthRemainingUnit      types.String                     `tfsdk:"bandwidth_remaining_unit"`
 	BandwidthRemainingValue     types.String                     `tfsdk:"bandwidth_remaining_value"`
 }
@@ -149,6 +151,12 @@ func (data PolicyMapQoS) toBody(ctx context.Context) string {
 			}
 			if !item.ShapeAverageRateUnit.IsNull() && !item.ShapeAverageRateUnit.IsUnknown() {
 				body, _ = sjson.Set(body, "class"+"."+strconv.Itoa(index)+"."+"shape.average.rate.unit", item.ShapeAverageRateUnit.ValueString())
+			}
+			if !item.ShapeAverageExcessBurstSize.IsNull() && !item.ShapeAverageExcessBurstSize.IsUnknown() {
+				body, _ = sjson.Set(body, "class"+"."+strconv.Itoa(index)+"."+"shape.average.excess-burst.size", strconv.FormatInt(item.ShapeAverageExcessBurstSize.ValueInt64(), 10))
+			}
+			if !item.ShapeAverageExcessBurstUnit.IsNull() && !item.ShapeAverageExcessBurstUnit.IsUnknown() {
+				body, _ = sjson.Set(body, "class"+"."+strconv.Itoa(index)+"."+"shape.average.excess-burst.unit", item.ShapeAverageExcessBurstUnit.ValueString())
 			}
 			if !item.BandwidthRemainingUnit.IsNull() && !item.BandwidthRemainingUnit.IsUnknown() {
 				body, _ = sjson.Set(body, "class"+"."+strconv.Itoa(index)+"."+"bandwidth-remaining.unit", item.BandwidthRemainingUnit.ValueString())
@@ -339,6 +347,16 @@ func (data *PolicyMapQoS) updateFromBody(ctx context.Context, res []byte) {
 		} else {
 			data.Classes[i].ShapeAverageRateUnit = types.StringNull()
 		}
+		if value := r.Get("shape.average.excess-burst.size"); value.Exists() && !data.Classes[i].ShapeAverageExcessBurstSize.IsNull() {
+			data.Classes[i].ShapeAverageExcessBurstSize = types.Int64Value(value.Int())
+		} else {
+			data.Classes[i].ShapeAverageExcessBurstSize = types.Int64Null()
+		}
+		if value := r.Get("shape.average.excess-burst.unit"); value.Exists() && !data.Classes[i].ShapeAverageExcessBurstUnit.IsNull() {
+			data.Classes[i].ShapeAverageExcessBurstUnit = types.StringValue(value.String())
+		} else {
+			data.Classes[i].ShapeAverageExcessBurstUnit = types.StringNull()
+		}
 		if value := r.Get("bandwidth-remaining.unit"); value.Exists() && !data.Classes[i].BandwidthRemainingUnit.IsNull() {
 			data.Classes[i].BandwidthRemainingUnit = types.StringValue(value.String())
 		} else {
@@ -434,6 +452,12 @@ func (data *PolicyMapQoS) fromBody(ctx context.Context, res []byte) {
 			if cValue := v.Get("shape.average.rate.unit"); cValue.Exists() {
 				item.ShapeAverageRateUnit = types.StringValue(cValue.String())
 			}
+			if cValue := v.Get("shape.average.excess-burst.size"); cValue.Exists() {
+				item.ShapeAverageExcessBurstSize = types.Int64Value(cValue.Int())
+			}
+			if cValue := v.Get("shape.average.excess-burst.unit"); cValue.Exists() {
+				item.ShapeAverageExcessBurstUnit = types.StringValue(cValue.String())
+			}
 			if cValue := v.Get("bandwidth-remaining.unit"); cValue.Exists() {
 				item.BandwidthRemainingUnit = types.StringValue(cValue.String())
 			}
@@ -527,6 +551,12 @@ func (data *PolicyMapQoSData) fromBody(ctx context.Context, res []byte) {
 			}
 			if cValue := v.Get("shape.average.rate.unit"); cValue.Exists() {
 				item.ShapeAverageRateUnit = types.StringValue(cValue.String())
+			}
+			if cValue := v.Get("shape.average.excess-burst.size"); cValue.Exists() {
+				item.ShapeAverageExcessBurstSize = types.Int64Value(cValue.Int())
+			}
+			if cValue := v.Get("shape.average.excess-burst.unit"); cValue.Exists() {
+				item.ShapeAverageExcessBurstUnit = types.StringValue(cValue.String())
 			}
 			if cValue := v.Get("bandwidth-remaining.unit"); cValue.Exists() {
 				item.BandwidthRemainingUnit = types.StringValue(cValue.String())
@@ -651,6 +681,12 @@ func (data *PolicyMapQoS) getDeletedItems(ctx context.Context, state PolicyMapQo
 				}
 				if !state.Classes[i].ShapeAverageRateUnit.IsNull() && data.Classes[j].ShapeAverageRateUnit.IsNull() {
 					deletedItems = append(deletedItems, fmt.Sprintf("%v/class%v/shape/average/rate/unit", state.getPath(), keyString))
+				}
+				if !state.Classes[i].ShapeAverageExcessBurstSize.IsNull() && data.Classes[j].ShapeAverageExcessBurstSize.IsNull() {
+					deletedItems = append(deletedItems, fmt.Sprintf("%v/class%v/shape/average/excess-burst/size", state.getPath(), keyString))
+				}
+				if !state.Classes[i].ShapeAverageExcessBurstUnit.IsNull() && data.Classes[j].ShapeAverageExcessBurstUnit.IsNull() {
+					deletedItems = append(deletedItems, fmt.Sprintf("%v/class%v/shape/average/excess-burst/unit", state.getPath(), keyString))
 				}
 				if !state.Classes[i].BandwidthRemainingUnit.IsNull() && data.Classes[j].BandwidthRemainingUnit.IsNull() {
 					deletedItems = append(deletedItems, fmt.Sprintf("%v/class%v/bandwidth-remaining/unit", state.getPath(), keyString))

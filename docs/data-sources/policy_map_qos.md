@@ -56,6 +56,8 @@ Read-Only:
 - `service_policy_name` (String) Name of the child service policy
 - `set_dscp` (String) Set IP DSCP (DiffServ CodePoint)
 - `set_mpls_experimental_topmost` (Number) Sets the experimental value of the MPLS packet top-most labels.
+- `shape_average_excess_burst_size` (Number)
+- `shape_average_excess_burst_unit` (String)
 - `shape_average_rate_unit` (String) Shape rate unit
 - `shape_average_rate_value` (String)
 - `type` (String) The type of class-map

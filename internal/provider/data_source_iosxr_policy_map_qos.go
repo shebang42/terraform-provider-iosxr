@@ -155,6 +155,14 @@ func (d *PolicyMapQoSDataSource) Schema(ctx context.Context, req datasource.Sche
 							MarkdownDescription: "Shape rate unit",
 							Computed:            true,
 						},
+						"shape_average_excess_burst_size": schema.Int64Attribute{
+							MarkdownDescription: "",
+							Computed:            true,
+						},
+						"shape_average_excess_burst_unit": schema.StringAttribute{
+							MarkdownDescription: "",
+							Computed:            true,
+						},
 						"bandwidth_remaining_unit": schema.StringAttribute{
 							MarkdownDescription: "Bandwidth value unit",
 							Computed:            true,

@@ -188,6 +188,20 @@ func (r *PolicyMapQoSResource) Schema(ctx context.Context, req resource.SchemaRe
 								stringvalidator.OneOf("bps", "cellsps", "gbps", "kbps", "mbps", "per-million", "per-thousand", "percent"),
 							},
 						},
+						"shape_average_excess_burst_size": schema.Int64Attribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").AddIntegerRangeDescription(1, 4294967295).String,
+							Optional:            true,
+							Validators: []validator.Int64{
+								int64validator.Between(1, 4294967295),
+							},
+						},
+						"shape_average_excess_burst_unit": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("").AddStringEnumDescription("bytes", "cells", "gbytes", "kbytes", "mbytes", "ms", "packets", "us").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.OneOf("bytes", "cells", "gbytes", "kbytes", "mbytes", "ms", "packets", "us"),
+							},
+						},
 						"bandwidth_remaining_unit": schema.StringAttribute{
 							MarkdownDescription: helpers.NewAttributeDescription("Bandwidth value unit").AddStringEnumDescription("percent", "ratio").String,
 							Optional:            true,
