@@ -47,6 +47,7 @@ type RouterBGPVRF struct {
 	DefaultMetric               types.Int64             `tfsdk:"default_metric"`
 	TimersBgpKeepaliveInterval  types.Int64             `tfsdk:"timers_bgp_keepalive_interval"`
 	TimersBgpHoldtime           types.String            `tfsdk:"timers_bgp_holdtime"`
+	BgpRouterId                 types.String            `tfsdk:"bgp_router_id"`
 	BfdMinimumInterval          types.Int64             `tfsdk:"bfd_minimum_interval"`
 	BfdMultiplier               types.Int64             `tfsdk:"bfd_multiplier"`
 	Neighbors                   []RouterBGPVRFNeighbors `tfsdk:"neighbors"`
@@ -68,6 +69,7 @@ type RouterBGPVRFData struct {
 	DefaultMetric               types.Int64             `tfsdk:"default_metric"`
 	TimersBgpKeepaliveInterval  types.Int64             `tfsdk:"timers_bgp_keepalive_interval"`
 	TimersBgpHoldtime           types.String            `tfsdk:"timers_bgp_holdtime"`
+	BgpRouterId                 types.String            `tfsdk:"bgp_router_id"`
 	BfdMinimumInterval          types.Int64             `tfsdk:"bfd_minimum_interval"`
 	BfdMultiplier               types.Int64             `tfsdk:"bfd_multiplier"`
 	Neighbors                   []RouterBGPVRFNeighbors `tfsdk:"neighbors"`
@@ -147,6 +149,9 @@ func (data RouterBGPVRF) toBody(ctx context.Context) string {
 	}
 	if !data.TimersBgpHoldtime.IsNull() && !data.TimersBgpHoldtime.IsUnknown() {
 		body, _ = sjson.Set(body, "timers.bgp.holdtime", data.TimersBgpHoldtime.ValueString())
+	}
+	if !data.BgpRouterId.IsNull() && !data.BgpRouterId.IsUnknown() {
+		body, _ = sjson.Set(body, "bgp.router-id", data.BgpRouterId.ValueString())
 	}
 	if !data.BfdMinimumInterval.IsNull() && !data.BfdMinimumInterval.IsUnknown() {
 		body, _ = sjson.Set(body, "bfd.minimum-interval", strconv.FormatInt(data.BfdMinimumInterval.ValueInt64(), 10))
@@ -312,6 +317,11 @@ func (data *RouterBGPVRF) updateFromBody(ctx context.Context, res []byte) {
 		data.TimersBgpHoldtime = types.StringValue(value.String())
 	} else {
 		data.TimersBgpHoldtime = types.StringNull()
+	}
+	if value := gjson.GetBytes(res, "bgp.router-id"); value.Exists() && !data.BgpRouterId.IsNull() {
+		data.BgpRouterId = types.StringValue(value.String())
+	} else {
+		data.BgpRouterId = types.StringNull()
 	}
 	if value := gjson.GetBytes(res, "bfd.minimum-interval"); value.Exists() && !data.BfdMinimumInterval.IsNull() {
 		data.BfdMinimumInterval = types.Int64Value(value.Int())
@@ -538,6 +548,9 @@ func (data *RouterBGPVRF) fromBody(ctx context.Context, res []byte) {
 	if value := gjson.GetBytes(res, "timers.bgp.holdtime"); value.Exists() {
 		data.TimersBgpHoldtime = types.StringValue(value.String())
 	}
+	if value := gjson.GetBytes(res, "bgp.router-id"); value.Exists() {
+		data.BgpRouterId = types.StringValue(value.String())
+	}
 	if value := gjson.GetBytes(res, "bfd.minimum-interval"); value.Exists() {
 		data.BfdMinimumInterval = types.Int64Value(value.Int())
 	}
@@ -679,6 +692,9 @@ func (data *RouterBGPVRFData) fromBody(ctx context.Context, res []byte) {
 	if value := gjson.GetBytes(res, "timers.bgp.holdtime"); value.Exists() {
 		data.TimersBgpHoldtime = types.StringValue(value.String())
 	}
+	if value := gjson.GetBytes(res, "bgp.router-id"); value.Exists() {
+		data.BgpRouterId = types.StringValue(value.String())
+	}
 	if value := gjson.GetBytes(res, "bfd.minimum-interval"); value.Exists() {
 		data.BfdMinimumInterval = types.Int64Value(value.Int())
 	}
@@ -816,6 +832,9 @@ func (data *RouterBGPVRF) getDeletedItems(ctx context.Context, state RouterBGPVR
 	}
 	if !state.TimersBgpHoldtime.IsNull() && data.TimersBgpHoldtime.IsNull() {
 		deletedItems = append(deletedItems, fmt.Sprintf("%v/timers/bgp", state.getPath()))
+	}
+	if !state.BgpRouterId.IsNull() && data.BgpRouterId.IsNull() {
+		deletedItems = append(deletedItems, fmt.Sprintf("%v/bgp/router-id", state.getPath()))
 	}
 	if !state.BfdMinimumInterval.IsNull() && data.BfdMinimumInterval.IsNull() {
 		deletedItems = append(deletedItems, fmt.Sprintf("%v/bfd/minimum-interval", state.getPath()))
@@ -1002,6 +1021,9 @@ func (data *RouterBGPVRF) getDeletePaths(ctx context.Context) []string {
 	}
 	if !data.TimersBgpHoldtime.IsNull() {
 		deletePaths = append(deletePaths, fmt.Sprintf("%v/timers/bgp", data.getPath()))
+	}
+	if !data.BgpRouterId.IsNull() {
+		deletePaths = append(deletePaths, fmt.Sprintf("%v/bgp/router-id", data.getPath()))
 	}
 	if !data.BfdMinimumInterval.IsNull() {
 		deletePaths = append(deletePaths, fmt.Sprintf("%v/bfd/minimum-interval", data.getPath()))

@@ -23,6 +23,7 @@ resource "iosxr_router_bgp_vrf" "example" {
   default_metric                = 125
   timers_bgp_keepalive_interval = 5
   timers_bgp_holdtime           = "20"
+  bgp_router_id                 = "22.22.22.22"
   bfd_minimum_interval          = 10
   bfd_multiplier                = 4
   neighbors = [
@@ -68,6 +69,7 @@ resource "iosxr_router_bgp_vrf" "example" {
   - Range: `3`-`30000`
 - `bfd_multiplier` (Number) Detect multiplier
   - Range: `2`-`16`
+- `bgp_router_id` (String) Configure Router-id
 - `default_information_originate` (Boolean) Distribute a default route
 - `default_metric` (Number) default redistributed metric
   - Range: `1`-`4294967295`

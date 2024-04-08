@@ -35,6 +35,7 @@ data "iosxr_router_bgp_vrf" "example" {
 
 - `bfd_minimum_interval` (Number) Hello interval
 - `bfd_multiplier` (Number) Detect multiplier
+- `bgp_router_id` (String) Configure Router-id
 - `default_information_originate` (Boolean) Distribute a default route
 - `default_metric` (Number) default redistributed metric
 - `id` (String) The path of the retrieved object.

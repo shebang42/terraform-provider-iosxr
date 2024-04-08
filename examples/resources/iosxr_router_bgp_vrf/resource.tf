@@ -8,6 +8,7 @@ resource "iosxr_router_bgp_vrf" "example" {
   default_metric                = 125
   timers_bgp_keepalive_interval = 5
   timers_bgp_holdtime           = "20"
+  bgp_router_id                 = "22.22.22.22"
   bfd_minimum_interval          = 10
   bfd_multiplier                = 4
   neighbors = [

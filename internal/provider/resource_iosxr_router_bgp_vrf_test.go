@@ -36,6 +36,7 @@ func TestAccIosxrRouterBGPVRF(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("iosxr_router_bgp_vrf.test", "default_metric", "125"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxr_router_bgp_vrf.test", "timers_bgp_keepalive_interval", "5"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxr_router_bgp_vrf.test", "timers_bgp_holdtime", "20"))
+	checks = append(checks, resource.TestCheckResourceAttr("iosxr_router_bgp_vrf.test", "bgp_router_id", "22.22.22.22"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxr_router_bgp_vrf.test", "bfd_minimum_interval", "10"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxr_router_bgp_vrf.test", "bfd_multiplier", "4"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxr_router_bgp_vrf.test", "neighbors.0.neighbor_address", "10.1.1.2"))
@@ -113,6 +114,7 @@ func testAccIosxrRouterBGPVRFConfig_all() string {
 	config += `	default_metric = 125` + "\n"
 	config += `	timers_bgp_keepalive_interval = 5` + "\n"
 	config += `	timers_bgp_holdtime = "20"` + "\n"
+	config += `	bgp_router_id = "22.22.22.22"` + "\n"
 	config += `	bfd_minimum_interval = 10` + "\n"
 	config += `	bfd_multiplier = 4` + "\n"
 	config += `	neighbors = [{` + "\n"
