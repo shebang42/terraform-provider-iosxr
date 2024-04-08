@@ -74,6 +74,10 @@ func (d *RouterBGPNeighborGroupDataSource) Schema(ctx context.Context, req datas
 				MarkdownDescription: "bgp as-number",
 				Computed:            true,
 			},
+			"description": schema.StringAttribute{
+				MarkdownDescription: "Neighbor specific description",
+				Computed:            true,
+			},
 			"update_source": schema.StringAttribute{
 				MarkdownDescription: "Source of routing updates",
 				Computed:            true,

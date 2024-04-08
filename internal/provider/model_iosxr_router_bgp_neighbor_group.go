@@ -37,6 +37,7 @@ type RouterBGPNeighborGroup struct {
 	AsNumber                          types.String                            `tfsdk:"as_number"`
 	Name                              types.String                            `tfsdk:"name"`
 	RemoteAs                          types.String                            `tfsdk:"remote_as"`
+	Description                       types.String                            `tfsdk:"description"`
 	UpdateSource                      types.String                            `tfsdk:"update_source"`
 	AdvertisementIntervalSeconds      types.Int64                             `tfsdk:"advertisement_interval_seconds"`
 	AdvertisementIntervalMilliseconds types.Int64                             `tfsdk:"advertisement_interval_milliseconds"`
@@ -63,6 +64,7 @@ type RouterBGPNeighborGroupData struct {
 	AsNumber                          types.String                            `tfsdk:"as_number"`
 	Name                              types.String                            `tfsdk:"name"`
 	RemoteAs                          types.String                            `tfsdk:"remote_as"`
+	Description                       types.String                            `tfsdk:"description"`
 	UpdateSource                      types.String                            `tfsdk:"update_source"`
 	AdvertisementIntervalSeconds      types.Int64                             `tfsdk:"advertisement_interval_seconds"`
 	AdvertisementIntervalMilliseconds types.Int64                             `tfsdk:"advertisement_interval_milliseconds"`
@@ -108,6 +110,9 @@ func (data RouterBGPNeighborGroup) toBody(ctx context.Context) string {
 	}
 	if !data.RemoteAs.IsNull() && !data.RemoteAs.IsUnknown() {
 		body, _ = sjson.Set(body, "remote-as", data.RemoteAs.ValueString())
+	}
+	if !data.Description.IsNull() && !data.Description.IsUnknown() {
+		body, _ = sjson.Set(body, "description", data.Description.ValueString())
 	}
 	if !data.UpdateSource.IsNull() && !data.UpdateSource.IsUnknown() {
 		body, _ = sjson.Set(body, "update-source", data.UpdateSource.ValueString())
@@ -221,6 +226,11 @@ func (data *RouterBGPNeighborGroup) updateFromBody(ctx context.Context, res []by
 		data.RemoteAs = types.StringValue(value.String())
 	} else {
 		data.RemoteAs = types.StringNull()
+	}
+	if value := gjson.GetBytes(res, "description"); value.Exists() && !data.Description.IsNull() {
+		data.Description = types.StringValue(value.String())
+	} else {
+		data.Description = types.StringNull()
 	}
 	if value := gjson.GetBytes(res, "update-source"); value.Exists() && !data.UpdateSource.IsNull() {
 		data.UpdateSource = types.StringValue(value.String())
@@ -425,6 +435,9 @@ func (data *RouterBGPNeighborGroup) fromBody(ctx context.Context, res []byte) {
 	if value := gjson.GetBytes(res, "remote-as"); value.Exists() {
 		data.RemoteAs = types.StringValue(value.String())
 	}
+	if value := gjson.GetBytes(res, "description"); value.Exists() {
+		data.Description = types.StringValue(value.String())
+	}
 	if value := gjson.GetBytes(res, "update-source"); value.Exists() {
 		data.UpdateSource = types.StringValue(value.String())
 	}
@@ -537,6 +550,9 @@ func (data *RouterBGPNeighborGroup) fromBody(ctx context.Context, res []byte) {
 func (data *RouterBGPNeighborGroupData) fromBody(ctx context.Context, res []byte) {
 	if value := gjson.GetBytes(res, "remote-as"); value.Exists() {
 		data.RemoteAs = types.StringValue(value.String())
+	}
+	if value := gjson.GetBytes(res, "description"); value.Exists() {
+		data.Description = types.StringValue(value.String())
 	}
 	if value := gjson.GetBytes(res, "update-source"); value.Exists() {
 		data.UpdateSource = types.StringValue(value.String())
@@ -651,6 +667,9 @@ func (data *RouterBGPNeighborGroup) getDeletedItems(ctx context.Context, state R
 	deletedItems := make([]string, 0)
 	if !state.RemoteAs.IsNull() && data.RemoteAs.IsNull() {
 		deletedItems = append(deletedItems, fmt.Sprintf("%v/remote-as", state.getPath()))
+	}
+	if !state.Description.IsNull() && data.Description.IsNull() {
+		deletedItems = append(deletedItems, fmt.Sprintf("%v/description", state.getPath()))
 	}
 	if !state.UpdateSource.IsNull() && data.UpdateSource.IsNull() {
 		deletedItems = append(deletedItems, fmt.Sprintf("%v/update-source", state.getPath()))
@@ -810,6 +829,9 @@ func (data *RouterBGPNeighborGroup) getDeletePaths(ctx context.Context) []string
 	var deletePaths []string
 	if !data.RemoteAs.IsNull() {
 		deletePaths = append(deletePaths, fmt.Sprintf("%v/remote-as", data.getPath()))
+	}
+	if !data.Description.IsNull() {
+		deletePaths = append(deletePaths, fmt.Sprintf("%v/description", data.getPath()))
 	}
 	if !data.UpdateSource.IsNull() {
 		deletePaths = append(deletePaths, fmt.Sprintf("%v/update-source", data.getPath()))

@@ -43,6 +43,7 @@ data "iosxr_router_bgp_neighbor_group" "example" {
 - `bfd_fast_detect_strict_mode` (Boolean) Hold down neighbor session until BFD session is up
 - `bfd_minimum_interval` (Number) Hello interval
 - `bfd_multiplier` (Number) Detect multiplier
+- `description` (String) Neighbor specific description
 - `id` (String) The path of the retrieved object.
 - `local_as` (String) bgp as-number
 - `local_as_dual_as` (Boolean) Dual-AS mode

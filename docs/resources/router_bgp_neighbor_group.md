@@ -17,6 +17,7 @@ resource "iosxr_router_bgp_neighbor_group" "example" {
   as_number                           = "65001"
   name                                = "GROUP1"
   remote_as                           = "65001"
+  description                         = "My Neighbor Group Description"
   update_source                       = "Loopback0"
   advertisement_interval_seconds      = 10
   bfd_minimum_interval                = 3
@@ -72,6 +73,7 @@ resource "iosxr_router_bgp_neighbor_group" "example" {
   - Range: `2`-`16`
 - `delete_mode` (String) Configure behavior when deleting/destroying the resource. Either delete the entire object (YANG container) being managed, or only delete the individual resource attributes configured explicitly and leave everything else as-is. Default value is `all`.
   - Choices: `all`, `attributes`
+- `description` (String) Neighbor specific description
 - `device` (String) A device name from the provider configuration.
 - `local_as` (String) bgp as-number
 - `local_as_dual_as` (Boolean) Dual-AS mode

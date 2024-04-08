@@ -97,6 +97,13 @@ func (r *RouterBGPNeighborGroupResource) Schema(ctx context.Context, req resourc
 				MarkdownDescription: helpers.NewAttributeDescription("bgp as-number").String,
 				Optional:            true,
 			},
+			"description": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Neighbor specific description").String,
+				Optional:            true,
+				Validators: []validator.String{
+					stringvalidator.LengthBetween(1, 1024),
+				},
+			},
 			"update_source": schema.StringAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Source of routing updates").String,
 				Optional:            true,
