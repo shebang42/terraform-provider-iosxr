@@ -11,6 +11,8 @@ attributes:
     example: GROUP1
   - yang_name: remote-as
     example: 65001
+  - yang_name: description
+    example: My Neighbor Group Description
   - yang_name: update-source
     example: Loopback0
   - yang_name: advertisement-interval/time-in-seconds
