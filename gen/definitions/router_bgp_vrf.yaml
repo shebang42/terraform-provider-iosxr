@@ -49,6 +49,8 @@ attributes:
     optional: true
     delete_parent: true
     example: 20
+  - yang_name: bgp/router-id
+    example: 22.22.22.22
   - yang_name: bfd/minimum-interval
     example: 10
   - yang_name: bfd/multiplier
