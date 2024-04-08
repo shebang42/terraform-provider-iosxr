@@ -114,6 +114,22 @@ func (d *RouterBGPNeighborGroupDataSource) Schema(ctx context.Context, req datas
 				MarkdownDescription: "Prevent bfd settings from being inherited from the parent",
 				Computed:            true,
 			},
+			"local_as": schema.StringAttribute{
+				MarkdownDescription: "bgp as-number",
+				Computed:            true,
+			},
+			"local_as_no_prepend": schema.BoolAttribute{
+				MarkdownDescription: "Do not prepend local AS to announcements from this neighbor",
+				Computed:            true,
+			},
+			"local_as_replace_as": schema.BoolAttribute{
+				MarkdownDescription: "Prepend only local AS to announcements to this neighbor",
+				Computed:            true,
+			},
+			"local_as_dual_as": schema.BoolAttribute{
+				MarkdownDescription: "Dual-AS mode",
+				Computed:            true,
+			},
 			"address_families": schema.ListNestedAttribute{
 				MarkdownDescription: "Enter Address Family command mode",
 				Computed:            true,
