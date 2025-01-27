@@ -39,6 +39,12 @@ resource "iosxr_snmp_server" "example" {
   traps_isis_authentication_failure = "enable"
   traps_bgp_cbgp2_updown            = true
   traps_bgp_bgp4_mib_updown         = true
+  vrfs = [
+    {
+      vrf_name = "VRF1"
+      context  = "cont-vrf-VRF1"
+    }
+  ]
   users = [
     {
       user_name                  = "USER1"
@@ -167,6 +173,7 @@ resource "iosxr_snmp_server" "example" {
 - `traps_snmp_linkup` (Boolean) Enable SNMPv2-MIB linkUp traps
 - `traps_system` (Boolean) Enable SNMP SYSTEMMIB-MIB traps
 - `users` (Attributes List) Name of the user (see [below for nested schema](#nestedatt--users))
+- `vrfs` (Attributes List) VRF name (see [below for nested schema](#nestedatt--vrfs))
 
 ### Read-Only
 
@@ -226,6 +233,18 @@ Optional:
 - `v3_priv_aes_aes_128_encryption_aes` (String) Specifies an aes-128 ENCRYPTED authentication password
 - `v3_priv_aes_aes_128_encryption_default` (String) Specifies an default ENCRYPTED authentication password
 - `v3_systemowner` (Boolean) System Owner permissions for MIB objects
+
+
+<a id="nestedatt--vrfs"></a>
+### Nested Schema for `vrfs`
+
+Required:
+
+- `vrf_name` (String) VRF name
+
+Optional:
+
+- `context` (String) SNMP Context Name
 
 ## Import
 

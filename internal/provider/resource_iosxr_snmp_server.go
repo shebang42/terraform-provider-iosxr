@@ -351,6 +351,30 @@ func (r *SNMPServerResource) Schema(ctx context.Context, req resource.SchemaRequ
 				MarkdownDescription: helpers.NewAttributeDescription("Enable CISCO-BGP4-MIB v2 up/down traps").String,
 				Optional:            true,
 			},
+			"vrfs": schema.ListNestedAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("VRF name").String,
+				Optional:            true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"vrf_name": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("VRF name").String,
+							Required:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(1, 32),
+								stringvalidator.RegexMatches(regexp.MustCompile(`[\w\-\.:,_@#%$\+=\|;]+`), ""),
+							},
+						},
+						"context": schema.StringAttribute{
+							MarkdownDescription: helpers.NewAttributeDescription("SNMP Context Name").String,
+							Optional:            true,
+							Validators: []validator.String{
+								stringvalidator.LengthBetween(1, 32),
+								stringvalidator.RegexMatches(regexp.MustCompile(`[\w\-\.:,_@#%$\+=\|;]+`), ""),
+							},
+						},
+					},
+				},
+			},
 			"users": schema.ListNestedAttribute{
 				MarkdownDescription: helpers.NewAttributeDescription("Name of the user").String,
 				Optional:            true,

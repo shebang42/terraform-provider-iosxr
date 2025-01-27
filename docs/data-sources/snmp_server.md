@@ -73,6 +73,7 @@ data "iosxr_snmp_server" "example" {
 - `traps_snmp_linkup` (Boolean) Enable SNMPv2-MIB linkUp traps
 - `traps_system` (Boolean) Enable SNMP SYSTEMMIB-MIB traps
 - `users` (Attributes List) Name of the user (see [below for nested schema](#nestedatt--users))
+- `vrfs` (Attributes List) VRF name (see [below for nested schema](#nestedatt--vrfs))
 
 <a id="nestedatt--communities"></a>
 ### Nested Schema for `communities`
@@ -119,3 +120,12 @@ Read-Only:
 - `v3_priv_aes_aes_128_encryption_aes` (String) Specifies an aes-128 ENCRYPTED authentication password
 - `v3_priv_aes_aes_128_encryption_default` (String) Specifies an default ENCRYPTED authentication password
 - `v3_systemowner` (Boolean) System Owner permissions for MIB objects
+
+
+<a id="nestedatt--vrfs"></a>
+### Nested Schema for `vrfs`
+
+Read-Only:
+
+- `context` (String) SNMP Context Name
+- `vrf_name` (String) VRF name
