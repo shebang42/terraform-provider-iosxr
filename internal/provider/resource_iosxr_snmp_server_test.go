@@ -53,8 +53,9 @@ func TestAccIosxrSNMPServer(t *testing.T) {
 	checks = append(checks, resource.TestCheckResourceAttr("iosxr_snmp_server.test", "traps_isis_authentication_failure", "enable"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxr_snmp_server.test", "traps_bgp_cbgp2_updown", "true"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxr_snmp_server.test", "traps_bgp_bgp4_mib_updown", "true"))
+	checks = append(checks, resource.TestCheckResourceAttr("iosxr_snmp_server.test", "contexts.0.context_name", "CONT-NAME1"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxr_snmp_server.test", "vrfs.0.vrf_name", "VRF1"))
-	checks = append(checks, resource.TestCheckResourceAttr("iosxr_snmp_server.test", "vrfs.0.context", "cont-vrf-VRF1"))
+	checks = append(checks, resource.TestCheckResourceAttr("iosxr_snmp_server.test", "vrfs.0.context", "CONT-VRF-VRF1"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxr_snmp_server.test", "users.0.user_name", "USER1"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxr_snmp_server.test", "users.0.group_name", "GROUP1"))
 	checks = append(checks, resource.TestCheckResourceAttr("iosxr_snmp_server.test", "users.0.v3_auth_md5_encryption_aes", "073C05626E2A4841141D"))
@@ -132,9 +133,12 @@ func testAccIosxrSNMPServerConfig_all() string {
 	config += `	traps_isis_authentication_failure = "enable"` + "\n"
 	config += `	traps_bgp_cbgp2_updown = true` + "\n"
 	config += `	traps_bgp_bgp4_mib_updown = true` + "\n"
+	config += `	contexts = [{` + "\n"
+	config += `		context_name = "CONT-NAME1"` + "\n"
+	config += `		}]` + "\n"
 	config += `	vrfs = [{` + "\n"
 	config += `		vrf_name = "VRF1"` + "\n"
-	config += `		context = "cont-vrf-VRF1"` + "\n"
+	config += `		context = "CONT-VRF-VRF1"` + "\n"
 	config += `		}]` + "\n"
 	config += `	users = [{` + "\n"
 	config += `		user_name = "USER1"` + "\n"

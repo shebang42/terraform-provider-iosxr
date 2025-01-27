@@ -28,6 +28,7 @@ data "iosxr_snmp_server" "example" {
 
 - `communities` (Attributes List) The UNENCRYPTED (cleartext) community string (see [below for nested schema](#nestedatt--communities))
 - `contact` (String) Text for mib Object sysContact
+- `contexts` (Attributes List) Context Name (see [below for nested schema](#nestedatt--contexts))
 - `groups` (Attributes List) Name of the group (see [below for nested schema](#nestedatt--groups))
 - `id` (String) The path of the retrieved object.
 - `location` (String) Text for mib Object sysLocation
@@ -88,6 +89,14 @@ Read-Only:
 - `sdrowner` (Boolean) SDR Owner permissions for MIB Objects
 - `systemowner` (Boolean) System Owner permissions for MIB objects
 - `view` (String) Restrict this community to a named view
+
+
+<a id="nestedatt--contexts"></a>
+### Nested Schema for `contexts`
+
+Read-Only:
+
+- `context_name` (String) Context Name
 
 
 <a id="nestedatt--groups"></a>

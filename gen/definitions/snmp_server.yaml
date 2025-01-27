@@ -126,6 +126,13 @@ attributes:
     example: true
   - yang_name: traps/Cisco-IOS-XR-um-router-bgp-cfg:bgp/bgp4-mib-updown
     example: true
+  - yang_name: context/contexts/context
+    tf_name: contexts
+    type: List
+    attributes:
+      - yang_name: context-name
+        id: true
+        example: CONT-NAME1
   - yang_name: vrfs/vrf
     tf_name: vrfs
     type: List
@@ -135,7 +142,7 @@ attributes:
         id: true
       - yang_name: contexts/context/context-name
         tf_name: context
-        example: cont-vrf-VRF1
+        example: CONT-VRF-VRF1
         delete_parent: true
   - yang_name: users/user
     tf_name: users
